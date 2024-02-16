@@ -129,7 +129,7 @@ if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️
     # # Convert a file from st.file_uploader() to cv2 format;
                             # img_np=np.array(img)
     img_np=cv2.imread(img_uploaded.name)
-    img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
+    img_np=cv2.cvtColor(img_np,cv2.COLOR_BGRA2RGB)
     img_uploaded_name=img_uploaded.name
 
 with st.form('my form'):
