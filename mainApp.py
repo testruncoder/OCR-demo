@@ -113,8 +113,10 @@ if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
         img_uploaded_name=sample_imgs_dict[sample_image]    
 
     if img_uploaded_name is not None:      
-        img_np=cv2.imread(img_uploaded_name)
-        img_np=cv2.cvtColor(img_np,cv2.COLOR_BGRA2RGB)
+                                        # img_np=np.array(img)
+        img_np=cv2.imread(img_uploaded.name)
+        img_np=img_np[:,:,::-1]
+        # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
         st.image(img_np, width=img_width,caption=f'{sample_image}')
 
 # # Upload an input image
@@ -129,7 +131,8 @@ if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️
     # # Convert a file from st.file_uploader() to cv2 format;
                             # img_np=np.array(img)
     img_np=cv2.imread(img_uploaded.name)
-    img_np=cv2.cvtColor(img_np,cv2.COLOR_BGRA2RGB)
+    img_np=img_np[:,:,::-1]
+    # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
     img_uploaded_name=img_uploaded.name
 
 with st.form('my form'):
