@@ -1,2 +1,2 @@
-# OCR-demo
+# OCR-demo-jy
 Basic OCR demo
