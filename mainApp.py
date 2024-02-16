@@ -13,6 +13,12 @@ import matplotlib.pyplot as plt
 # -----------------------------------------------------------------------------------------------
 # mainApp.py (02/16/2024)
 # Changed the name from JY_st_easyOCR0_1.py - Ver0_1 (02/16/2024)
+# - IMPORTANT UPDATE:
+# (1) When attempted to run the app on streamlit server, the  error appeared:
+# "img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)"
+# while using opencv-python-headless==4.5.5.64 or 4.9.0.80.
+# Couldn't find a solution as of 02/16/2024.
+# Decided to rewrite the code without using cv2.cvtColor()...
 
 
 # -----------------------------------------------------------------------------------------------
@@ -24,7 +30,6 @@ import matplotlib.pyplot as plt
 # --> >>> top_left=tuple(reslt[0][0])  # e.g., (102, 606)
 #    >>> top_left=tuple(map(int, top_left))
 # (4) The width of the displayed image can be adjusted.
-
 
 # -----------------------------------------------------------------------------------------------
 # JY_st_easyOCR0.py - Ver0 (02/15/2024)
@@ -45,7 +50,7 @@ import matplotlib.pyplot as plt
 # https://medium.com/@adityamahajan.work/easyocr-a-comprehensive-guide-5ff1cb850168
 # -----------------------------------------------------------------------------------------------
 
-CODE_TITLE='🔡 JY_st_easyOCR0_1.py'
+CODE_TITLE='🔡 OCR'
 CODE_VER='Ver 0_1 -- Using easyOCR'
 
 
@@ -72,9 +77,9 @@ selectbox_options=[
                     'License Plate','Receipt','Prescription']
 sample_imgs_dict={
                 'Scroll down to select an image': None,
-                'License Plate': r"\sample_images\image_demo_licnesePlate.png",
-                'Receipt': r"\sample_images\img_demo_receipt.jpg" ,
-                'Prescription': r"\sample_images\medical-prescription-ocr.webp",
+                'License Plate': r"sample_images/image_demo_licnesePlate.png",
+                'Receipt': r"/sample_images/img_demo_receipt.jpg" ,
+                'Prescription': r"/sample_images/medical-prescription-ocr.webp",
                   }
 radio_btn_options=['🖼️ Upload an Image','🗃️ Select an Image Sample']
 
@@ -112,10 +117,10 @@ if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
     if sample_image is not None:  # That is, a user selects an image from st.sidebar.selectbox() other than its placeholder value.
         img_uploaded_name=sample_imgs_dict[sample_image]    
 
-    if img_uploaded_name is not None:      
-                                        # img_np=np.array(img)
-        img_np=cv2.imread(img_uploaded.name)
-        img_np=img_np[:,:,::-1]
+    # if img_uploaded_name != '':      
+                                # img_np=np.array(img)
+        img_np=cv2.imread(img_uploaded_name)
+        # img_np=img_np[:,:,::-1]
         # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
         st.image(img_np, width=img_width,caption=f'{sample_image}')
 
@@ -130,8 +135,8 @@ if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️
     img=Image.open(img_uploaded)
     # # Convert a file from st.file_uploader() to cv2 format;
                             # img_np=np.array(img)
-    img_np=cv2.imread(img_uploaded.name)
-    img_np=img_np[:,:,::-1]
+    # img_np=cv2.imread(img_uploaded.name)
+    # img_np=img_np[:,:,::-1]
     # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
     img_uploaded_name=img_uploaded.name
 
