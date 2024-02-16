@@ -72,9 +72,9 @@ selectbox_options=[
                     'License Plate','Receipt','Prescription']
 sample_imgs_dict={
                 'Scroll down to select an image': None,
-                'License Plate': r"\Users\email\OneDrive\DesktopSP7\JY_pyTools\OCR_py\sample_images\image_demo_licnesePlate.png",
-                'Receipt': r"\Users\email\OneDrive\DesktopSP7\JY_pyTools\OCR_py\sample_images\img_demo_receipt.jpg" ,
-                'Prescription': r"\Users\email\OneDrive\DesktopSP7\JY_pyTools\OCR_py\sample_images\medical-prescription-ocr.webp",
+                'License Plate': r"\sample_images\image_demo_licnesePlate.png",
+                'Receipt': r"\sample_images\img_demo_receipt.jpg" ,
+                'Prescription': r"\sample_images\medical-prescription-ocr.webp",
                   }
 radio_btn_options=['🖼️ Upload an Image','🗃️ Select an Image Sample']
 
