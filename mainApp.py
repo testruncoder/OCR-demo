@@ -114,7 +114,7 @@ if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
 
     if img_uploaded_name is not None:      
         img_np=cv2.imread(img_uploaded_name)
-        img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
+        img_np=cv2.cvtColor(img_np,cv2.COLOR_BGRA2RGB)
         st.image(img_np, width=img_width,caption=f'{sample_image}')
 
 # # Upload an input image
