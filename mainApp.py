@@ -26,6 +26,10 @@ import matplotlib.pyplot as plt
 CODE_TITLE='🔡 OCR'
 CODE_VER='Ver 0_1 -- Using easyOCR'
 
+st.set_page_config(
+    page_title='OCR Demo',
+    layout='centered',
+)
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START OF MAIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 st.title(CODE_TITLE)
