@@ -121,7 +121,7 @@ if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
                                 # img_np=np.array(img)
         img_np=cv2.imread(img_uploaded_name)
         # img_np=img_np[:,:,::-1]
-        # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
+        # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)  # Disabled in streamlit cloud version code - Ver0_1 (02/16/2024)
         st.image(img_np, width=img_width,caption=f'{sample_image}')
 
 # # Upload an input image
@@ -137,7 +137,7 @@ if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️
                             # img_np=np.array(img)
     # img_np=cv2.imread(img_uploaded.name)
     # img_np=img_np[:,:,::-1]
-    # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
+    # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)  # Disabled in streamlit cloud version code - Ver0_1 (02/16/2024)
     img_uploaded_name=img_uploaded.name
 
 with st.form('my form'):
@@ -146,13 +146,13 @@ with st.form('my form'):
         if (img_uploaded is None) and (img_uploaded_name is None):
             st.warning('Please upload an image file in the left side panel.')
         else:
-            # st.image(img_uploaded, caption=f'{img_uploaded.name}')
-            # img=Image.open(img_uploaded)
-
-            # # # Convert a file from st.file_uploader() to cv2 format;
-            #                         # img_np=np.array(img)
-            # img_np=cv2.imread(img_uploaded.name)
-            # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
+                        # st.image(img_uploaded, caption=f'{img_uploaded.name}')
+                        # img=Image.open(img_uploaded)
+            
+                        # # # Convert a file from st.file_uploader() to cv2 format;
+                        #                         # img_np=np.array(img)
+                        # img_np=cv2.imread(img_uploaded.name)
+                        # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
             if submitted:
                 show_info1=st.empty()
                 show_info1.info('Applying OCR to the image (it may take a while)...')
