@@ -11,43 +11,16 @@ import matplotlib.pyplot as plt
 
 
 # -----------------------------------------------------------------------------------------------
-# mainApp.py (02/16/2024)
+# mainApp.py (02/16/2024) - Ver0_1 9JY_st_easyOCR0_1_stio.py)
 # Changed the name from JY_st_easyOCR0_1.py - Ver0_1 (02/16/2024)
 # - IMPORTANT UPDATE:
 # (1) When attempted to run the app on streamlit server, the  error appeared:
 # "img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)"
 # while using opencv-python-headless==4.5.5.64 or 4.9.0.80.
 # Couldn't find a solution as of 02/16/2024.
-# Decided to rewrite the code without using cv2.cvtColor()...
-
-
-# -----------------------------------------------------------------------------------------------
-# JY_st_easyOCR0_1.py - Ver0_1 (02/15/2024)
-# - Updates:
-# (1) Add sample images for demo, such as a license plate, a receipt, etc.
-# (2) Implement other OCR algorithms as well.
-# (3) Convert tuples of coordinates for rectangle boxes from float to integer by using 
-# --> >>> top_left=tuple(reslt[0][0])  # e.g., (102, 606)
-#    >>> top_left=tuple(map(int, top_left))
-# (4) The width of the displayed image can be adjusted.
-
-# -----------------------------------------------------------------------------------------------
-# JY_st_easyOCR0.py - Ver0 (02/15/2024)
-# - Updates:
-# (1) Show bounding boxes in the image;
-# https://thanseefpp.medium.com/effortless-ocr-implementation-comprehensive-guide-with-pytesseract-keras-ocr-and-easyocr-code-f45163b7ea93
-# (2) implement other OCR algorithms such as .... in addition to easyOCR;
-# (3) Process multiple images;
-# (4) Reduce noises when handling noisy images;
-
-# - New:
-# (1) init_easyOCR() - Ver0 (02/15/2024)
-
-# -----------------------------------------------------------------------------------------------
-# Ex_st_easyOCR0.py - Ver0 (02/15/2024)
-# - Copy and paste a sample code from the reference below:
-# - Run easyOCR to read texts from images; 
-# https://medium.com/@adityamahajan.work/easyocr-a-comprehensive-guide-5ff1cb850168
+# Decided to rewrite the code without using cv2.cvtColor(). --> Fixed the bug when running the code
+# on the streamlit server.
+# (2) Used a path in the form of r"sample_images/image_demo_licnesePlate.png";
 # -----------------------------------------------------------------------------------------------
 
 CODE_TITLE='🔡 OCR'
@@ -57,7 +30,6 @@ CODE_VER='Ver 0_1 -- Using easyOCR'
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> START OF MAIN >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 st.title(CODE_TITLE)
 st.caption(CODE_VER)
-
 
 # -----------------------------------------------------------------------------------------------------------------
 # init_easyOCR() - Ver0 (02/15/2024)
@@ -78,8 +50,8 @@ selectbox_options=[
 sample_imgs_dict={
                 'Scroll down to select an image': None,
                 'License Plate': r"sample_images/image_demo_licnesePlate.png",
-                'Receipt': r"sample_images/img_demo_receipt.jpg" ,
-                'Prescription': r"sample_images/medical-prescription-ocr.webp",
+                'Receipt': r"/sample_images/img_demo_receipt.jpg" ,
+                'Prescription': r"/sample_images/medical-prescription-ocr.webp",
                   }
 radio_btn_options=['🖼️ Upload an Image','🗃️ Select an Image Sample']
 
@@ -90,23 +62,29 @@ reader=init_easyOCR(['es'])
 img_uploaded_name=None 
 img_uploaded=None 
 
+container1=st.sidebar.container()
+container2=st.sidebar.container()
+container3=st.sidebar.container()
+
 # # Choose options betwen sample images or image upload;
-radio_btn=st.sidebar.radio('⭐ Choose a method:',
+radio_btn=container1.radio('⭐ Choose a method:',
                     radio_btn_options,
                    index=0,
                    key='radiobtn_chooseamethod0',
                    )
 
 img_width=480
-with st.sidebar.expander('Image Width',expanded=False):
-    img_width=st.slider('Choose the image width:', min_value=320,max_value=800, value=480, step=20,
-                        help='Default = 480',
-                        key='slider_imgwidth0',
-                        )
+with container3:
+    st.markdown('')
+    with st.expander('Image Width',expanded=False):
+        img_width=st.slider('Choose the image width:', min_value=320,max_value=800, value=480, step=20,
+                            help='Default = 480',
+                            key='slider_imgwidth0',
+                            )
 
 if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
     st.subheader('🗃️ Sample Image')
-    sample_image=st.sidebar.selectbox('🗃️ Choose an image:',
+    sample_image=container2.selectbox('🗃️ Choose an image:',
                               selectbox_options,
                         #   ['License Plate','Receipt','Prescription'],
                               index=None,
@@ -121,12 +99,12 @@ if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
                                 # img_np=np.array(img)
         img_np=cv2.imread(img_uploaded_name)
         # img_np=img_np[:,:,::-1]
-        # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)  # Disabled in streamlit cloud version code - Ver0_1 (02/16/2024)
+        # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
         st.image(img_np, width=img_width,caption=f'{sample_image}')
 
 # # Upload an input image
 if radio_btn==radio_btn_options[0]:  # '🖼️ Upload an Image'
-    img_uploaded=st.sidebar.file_uploader('🖼️ Upload an image file', type=['jpg','jpeg','png','webp'])
+    img_uploaded=container1.file_uploader('🖼️ Upload an image file', type=['jpg','jpeg','png','webp'])
 
 
 if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️ Upload an Image','Select an Image Sample'
@@ -137,7 +115,7 @@ if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️
                             # img_np=np.array(img)
     # img_np=cv2.imread(img_uploaded.name)
     # img_np=img_np[:,:,::-1]
-    # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)  # Disabled in streamlit cloud version code - Ver0_1 (02/16/2024)
+    # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
     img_uploaded_name=img_uploaded.name
 
 with st.form('my form'):
@@ -146,13 +124,13 @@ with st.form('my form'):
         if (img_uploaded is None) and (img_uploaded_name is None):
             st.warning('Please upload an image file in the left side panel.')
         else:
-                        # st.image(img_uploaded, caption=f'{img_uploaded.name}')
-                        # img=Image.open(img_uploaded)
-            
-                        # # # Convert a file from st.file_uploader() to cv2 format;
-                        #                         # img_np=np.array(img)
-                        # img_np=cv2.imread(img_uploaded.name)
-                        # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
+            # st.image(img_uploaded, caption=f'{img_uploaded.name}')
+            # img=Image.open(img_uploaded)
+
+            # # # Convert a file from st.file_uploader() to cv2 format;
+            #                         # img_np=np.array(img)
+            # img_np=cv2.imread(img_uploaded.name)
+            # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
             if submitted:
                 show_info1=st.empty()
                 show_info1.info('Applying OCR to the image (it may take a while)...')
@@ -205,7 +183,6 @@ for i in range(12):
     st.sidebar.markdown('')
 
 # # Coloring st.button() 
-# Inspired by JY_pyTools\stMyCalendar\JY_st_timeGridList0_6a.py- Ver02c (01/23/2024)
 with st.sidebar.expander('🎨 Color for buttons', expanded=False):
 # with container_colorBtn:
     primaryColor=st.color_picker('Click color to change', "#008CF9")  # "#00f900")
