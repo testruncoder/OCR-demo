@@ -78,8 +78,8 @@ selectbox_options=[
 sample_imgs_dict={
                 'Scroll down to select an image': None,
                 'License Plate': r"sample_images/image_demo_licnesePlate.png",
-                'Receipt': r"/sample_images/img_demo_receipt.jpg" ,
-                'Prescription': r"/sample_images/medical-prescription-ocr.webp",
+                'Receipt': r"sample_images/img_demo_receipt.jpg" ,
+                'Prescription': r"sample_images/medical-prescription-ocr.webp",
                   }
 radio_btn_options=['🖼️ Upload an Image','🗃️ Select an Image Sample']
 
