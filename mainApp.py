@@ -9,6 +9,8 @@ import numpy as np
 import re
 import matplotlib.pyplot as plt
 
+import tempfile  # stio-Ver0_1 (02/17/2024)
+
 
 # -----------------------------------------------------------------------------------------------
 # mainApp.py (02/16/2024) - Ver0_1 9JY_st_easyOCR0_1_stio.py)
