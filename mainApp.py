@@ -68,29 +68,17 @@ reader=init_easyOCR(['es'])
 img_uploaded_name=None 
 img_uploaded=None 
 
-container1=st.sidebar.container()
-container2=st.sidebar.container()
-container3=st.sidebar.container()
-
 # # Choose options betwen sample images or image upload;
-radio_btn=container1.radio('⭐ Choose a method:',
+radio_btn=st.sidebar.radio('⭐ Choose a method:',
                     radio_btn_options,
                    index=0,
                    key='radiobtn_chooseamethod0',
                    )
-
 img_width=480
-with container3:
-    st.markdown('')
-    with st.expander('↔️ Image Width',expanded=False):
-        img_width=st.slider('Choose the image width:', min_value=200,max_value=760, value=480, step=20,
-                            help='Default = 480',
-                            key='slider_imgwidth0',
-                            )
 
 if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
     st.subheader('🗃️ Sample Image')
-    sample_image=container2.selectbox('🗃️ Choose an image:',
+    sample_image=st.sidebar.selectbox('🗃️ Choose an image:',
                               selectbox_options,
                         #   ['License Plate','Receipt','Prescription'],
                               index=None,
@@ -98,6 +86,13 @@ if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
                               key='selectbox_imguploaded0',
                               )
     
+    st.sidebar.markdown('')
+    with st.sidebar.expander('↔️ Image Width',expanded=False):
+        img_width=st.slider('Choose the image width:', min_value=200,max_value=760, value=480, step=20,
+                            help='Default = 480',
+                            key='slider_imgwidth0',
+                            )
+
     if sample_image is not None:  # That is, a user selects an image from st.sidebar.selectbox() other than its placeholder value.
         img_uploaded_name=sample_imgs_dict[sample_image]    
 
@@ -109,7 +104,13 @@ if radio_btn==radio_btn_options[1]:  #'Select an Image Sample'
 
 # # Upload an input image
 if radio_btn==radio_btn_options[0]:  # '🖼️ Upload an Image'
-    img_uploaded=container1.file_uploader('🖼️ Upload an image file', type=['jpg','jpeg','png','webp'])
+    img_uploaded=st.sidebar.file_uploader('🖼️ Upload an image file', type=['jpg','jpeg','png','webp'])
+    st.sidebar.markdown('')
+    with st.sidebar.expander('↔️ Image Width',expanded=False):
+        img_width=st.slider('Choose the image width:', min_value=200,max_value=760, value=480, step=20,
+                            help='Default = 480',
+                            key='slider_imgwidth0',
+                            )
 
 if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️ Upload an Image','Select an Image Sample'
     st.subheader('🖼️ Uploaded Image:')
