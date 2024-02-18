@@ -118,7 +118,11 @@ if (radio_btn==radio_btn_options[0]) and (img_uploaded is not None):  # '🖼️
                 # img_np=cv2.imread(img_uploaded.name)
     # img_np=img_np[:,:,::-1]
                 # img_np=cv2.cvtColor(img_np,cv2.COLOR_BGR2RGB)
-    img_uploaded_name=img_uploaded.name
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
+        temp_file.write(img_uploaded.getvalue())
+
+    img_uploaded_name=temp_file.name
+    # img_uploaded_name=img_uploaded.name
 
 with st.form('my form'):
     submitted=st.form_submit_button('🚀 Run OCR')
